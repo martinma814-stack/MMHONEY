@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<title>Honeymoon App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#d4a373">
+
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
+
+<style>
+body{margin:0;font-family:-apple-system;background:#f4f4f6}
+.app{max-width:430px;margin:auto;padding-bottom:90px}
+.header{background:linear-gradient(135deg,#d4a373,#faedcd);padding:50px 20px 30px;text-align:center;border-radius:0 0 24px 24px}
+.card{background:#fff;margin:16px;padding:18px;border-radius:18px;box-shadow:0 8px 20px rgba(0,0,0,.08)}
+.card h2{margin-top:0;color:#9c6644;font-size:18px}
+.map iframe{width:100%;height:200px;border-radius:14px;border:0}
+.checklist label{display:flex;align-items:center;gap:6px;margin:8px 0}
+.bottom-nav{position:fixed;bottom:0;max-width:430px;width:100%;background:#fff;display:flex;justify-content:space-around;padding:10px 0;box-shadow:0 -4px 12px rgba(0,0,0,.1)}
+[contenteditable]{outline:none}
+</style>
+</head>
+
+<body>
+
+<!-- 🔒 密碼鎖 -->
+<div id="lock" style="position:fixed;inset:0;background:#faedcd;display:flex;align-items:center;justify-content:center;z-index:9999">
+  <div>
+    <h2>🔒 Honeymoon App</h2>
+    <input id="pwd" type="password" placeholder="輸入密碼">
+    <button onclick="unlock()">解鎖</button>
+  </div>
+</div>
+
+<!-- 🖼️ Splash -->
+<div id="splash" style="position:fixed;inset:0;background:url('icon.png') center/cover no-repeat;z-index:9998"></div>
+
+<div class="app">
+<div class="header">
+<h1 contenteditable>💍 澳洲蜜月之旅</h1>
+<p contenteditable>4/3 – 15/3</p>
+</div>
+
+<!-- 每日行程示例 -->
+<div class="card">
+<h2 contenteditable>Day 1｜4/3 香港 → 墨爾本</h2>
+<p contenteditable>CX135｜蜜月開始 ❤️</p>
+</div>
+
+<div class="card">
+<h2 contenteditable>Day 2｜5/3 墨爾本</h2>
+<p contenteditable>入住 Brady Hotel</p>
+<div class="map">
+<iframe src="https://www.google.com/maps?q=Brady+Hotel+Central+Melbourne&output=embed"></iframe>
+</div>
+</div>
+
+<!-- 💰 已付清單 -->
+<div class="card">
+<h2>💰 已付清單</h2>
+<div class="checklist">
+<label><input type="checkbox"><span>機票</span>$<input type="number" class="amount" value="0"></label>
+<label><input type="checkbox"><span>酒店</span>$<input type="number" class="amount" value="0"></label>
+<label><input type="checkbox"><span>F1 門票</span>$<input type="number" class="amount" value="0"></label>
+</div>
+<p>✅ 已付：$<span id="paid">0</span></p>
+<p>⏳ 未付：$<span id="unpaid">0</span></p>
+</div>
+</div>
+
+<div class="bottom-nav">
+<div>行程</div>
+<div>已付</div>
+<div>回憶</div>
+</div>
+
+<!-- 🔥 Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script>
+firebase.initializeApp({
+  databaseURL: "https://【換成你自己Firebase URL】"
+});
+const db=firebase.database();
+</script>
+
+<script>
+// Splash
+setTimeout(()=>document.getElementById('splash').style.display='none',1500);
+
+// 密碼
+const PASS="2026";
+function unlock(){
+ if(pwd.value===PASS)lock.style.display='none';
+ else alert("密碼錯誤");
+}
+
+// 同步內容
+document.querySelectorAll('[contenteditable]').forEach((el,i)=>{
+ const ref=db.ref('text/'+i);
+ ref.on('value',s=>{if(s.exists()&&document.activeElement!==el)el.innerHTML=s.val()});
+ el.oninput=()=>ref.set(el.innerHTML);
+});
+
+// 已付計數
+function calc(){
+ let paid=0,unpaid=0;
+ document.querySelectorAll('.checklist label').forEach((row,i)=>{
+  const c=row.querySelector('input[type=checkbox]');
+  const a=+row.querySelector('.amount').value||0;
+  c.checked?paid+=a:unpaid+=a;
+  db.ref('pay/'+i).set({c:c.checked,a});
+ });
+ paidSpan.innerText=paid;
+ unpaidSpan.innerText=unpaid;
+}
+document.querySelectorAll('.checklist input').forEach(i=>i.oninput=calc);
+</script>
+
+</body>
+</html>
