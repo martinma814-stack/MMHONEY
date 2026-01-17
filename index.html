@@ -2,229 +2,175 @@
 <html lang="zh-HK">
 <head>
 <meta charset="UTF-8">
-<title>Honeymoon Planner</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MM HoneyMoon Trip</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial;
-    background: #f4f4f6;
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont;
+  background:#f4f4f4;
 }
-.app {
-    max-width: 430px;
-    margin: auto;
-    padding-bottom: 90px;
+header{
+  background:#111;
+  color:#fff;
+  padding:14px;
+  text-align:center;
+  font-size:20px;
 }
-.header {
-    background: linear-gradient(135deg,#d4a373,#faedcd);
-    padding: 50px 20px 30px;
-    text-align: center;
-    border-radius: 0 0 24px 24px;
+.card{
+  background:#fff;
+  margin:14px;
+  padding:14px;
+  border-radius:14px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
-.header h1 { margin: 0; }
-.card {
-    background: #fff;
-    margin: 16px;
-    padding: 18px;
-    border-radius: 18px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+h3{margin:0 0 8px 0;}
+textarea,input{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:16px;
+  margin-top:6px;
 }
-.card h2 {
-    margin-top: 0;
-    font-size: 18px;
-    color: #9c6644;
+button{
+  width:100%;
+  margin-top:8px;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#111;
+  color:#fff;
+  font-size:16px;
 }
-.card p { line-height: 1.6; }
-.map iframe {
-    width: 100%;
-    height: 200px;
-    border-radius: 14px;
-    border: 0;
-}
-.checklist label {
-    display: flex;
-    align-items: center;
-    margin: 8px 0;
-}
-.checklist input {
-    margin-right: 10px;
-    transform: scale(1.2);
-}
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    max-width: 430px;
-    width: 100%;
-    background: #fff;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
-}
-.nav-item {
-    font-size: 12px;
-    color: #888;
-}
-.nav-item.active {
-    color: #9c6644;
-    font-weight: 600;
-}
-[contenteditable="true"] { outline: none; }
+#app{display:none;}
+small{color:#777;}
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<header>💍 MM HoneyMoon</header>
 
-<div class="header">
-<h1 contenteditable="true">💍 澳洲蜜月計劃</h1>
-<p contenteditable="true">4/3 – 15/3</p>
+<!-- LOGIN -->
+<div class="card" id="loginBox">
+  <h3>🔐 私人登入</h3>
+  <input type="password" id="pw" placeholder="輸入密碼">
+  <button onclick="login()">進入</button>
 </div>
 
-<!-- Day 1 -->
+<!-- APP -->
+<div id="app">
+
+<!-- ===== 行程 DAY 1–12 ===== -->
+<script>
+const days = [
+ "4/3｜香港 → Melbourne（CX135）",
+ "5/3｜抵達 Melbourne · Brady Hotel",
+ "6/3｜Melbourne · F1 GP",
+ "7/3｜Melbourne · F1 GP",
+ "8/3｜Melbourne · F1 GP",
+ "9/3｜大洋路跳降落傘",
+ "10/3｜Melbourne → Tasmania（JQ733）",
+ "11/3｜Cradle Mountain",
+ "12/3｜Tasmania 行程",
+ "13/3｜Tasmania → Sydney（JQ720）",
+ "14/3｜Sydney",
+ "15/3｜Sydney → 香港（CX100）"
+];
+</script>
+
+<div id="days"></div>
+
 <div class="card">
-<h2 contenteditable="true">Day 1｜4/3 香港 → 墨爾本</h2>
-<p contenteditable="true">
-✈️ CX135<br>
-出發日 · 蜜月開始 ❤️
-</p>
-</div>
-
-<!-- Day 2 -->
-<div class="card">
-<h2 contenteditable="true">Day 2｜5/3 抵達墨爾本</h2>
-<p contenteditable="true">
-入住 Brady Hotel Central Melbourne<br>
-市區散步 + 咖啡
-</p>
-<div class="map">
-<iframe src="https://www.google.com/maps?q=Brady+Hotel+Central+Melbourne&output=embed"></iframe>
-</div>
-</div>
-
-<!-- Day 3 -->
-<div class="card">
-<h2 contenteditable="true">Day 3｜6/3 Melbourne F1 GP</h2>
-<p contenteditable="true">
-F1 賽事日<br>
-夜晚市中心晚餐
-</p>
-</div>
-
-<!-- Day 4 -->
-<div class="card">
-<h2 contenteditable="true">Day 4｜7/3 Melbourne F1 GP</h2>
-<p contenteditable="true">
-自由觀賽 / 休息
-</p>
-</div>
-
-<!-- Day 5 -->
-<div class="card">
-<h2 contenteditable="true">Day 5｜8/3 Melbourne</h2>
-<p contenteditable="true">
-F1 最後一日 / Shopping
-</p>
-</div>
-
-<!-- Day 6 -->
-<div class="card">
-<h2 contenteditable="true">Day 6｜9/3 大洋路跳傘</h2>
-<p contenteditable="true">
-Great Ocean Road Skydive<br>
-12 Apostles
-</p>
-<div class="map">
-<iframe src="https://www.google.com/maps?q=Great+Ocean+Road&output=embed"></iframe>
-</div>
-</div>
-
-<!-- Day 7 -->
-<div class="card">
-<h2 contenteditable="true">Day 7｜10/3 墨爾本 → 塔斯馬尼亞</h2>
-<p contenteditable="true">
-✈️ JQ733<br>
-Check-in Cradle Mountain Hotel<br>
-19:30 Dinner
-</p>
-<div class="map">
-<iframe src="https://www.google.com/maps?q=Cradle+Mountain+Hotel&output=embed"></iframe>
-</div>
-</div>
-
-<!-- Day 8 -->
-<div class="card">
-<h2 contenteditable="true">Day 8｜11/3 Cradle Mountain</h2>
-<p contenteditable="true">
-Dove Lake Walk<br>
-自然探索
-</p>
-</div>
-
-<!-- Day 9 -->
-<div class="card">
-<h2 contenteditable="true">Day 9｜12/3 Hobart</h2>
-<p contenteditable="true">
-Salamanca Place<br>
-Harbour Walk
-</p>
-<div class="map">
-<iframe src="https://www.google.com/maps?q=Hobart+Tasmania&output=embed"></iframe>
-</div>
-</div>
-
-<!-- Day 10 -->
-<div class="card">
-<h2 contenteditable="true">Day 10｜13/3 Hobart → Sydney</h2>
-<p contenteditable="true">
-✈️ JQ720<br>
-Opera House
-</p>
-<div class="map">
-<iframe src="https://www.google.com/maps?q=Sydney+Opera+House&output=embed"></iframe>
-</div>
-</div>
-
-<!-- Day 11 -->
-<div class="card">
-<h2 contenteditable="true">Day 11｜14/3 Sydney</h2>
-<p contenteditable="true">
-Bondi Beach<br>
-浪漫晚餐
-</p>
-</div>
-
-<!-- Day 12 -->
-<div class="card">
-<h2 contenteditable="true">Day 12｜15/3 回港</h2>
-<p contenteditable="true">
-✈️ CX100
-</p>
-</div>
-
-<!-- Paid Checklist -->
-<div class="card">
-<h2>💰 已付清單</h2>
-<div class="checklist">
-<label><input type="checkbox"> 機票</label>
-<label><input type="checkbox"> 墨爾本酒店</label>
-<label><input type="checkbox"> F1 門票</label>
-<label><input type="checkbox"> 大洋路跳傘</label>
-<label><input type="checkbox"> 塔斯馬尼亞酒店</label>
-<label><input type="checkbox"> 內陸機票</label>
-</div>
+  <small>☁️ 雲端同步｜📴 離線可用｜🧭 一鍵導航</small>
 </div>
 
 </div>
 
-<div class="bottom-nav">
-<div class="nav-item active">行程</div>
-<div class="nav-item">已付</div>
-<div class="nav-item">回憶</div>
-</div>
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+/* 🔥 換成你自己 Firebase */
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_DOMAIN",
+  projectId: "YOUR_PROJECT_ID"
+};
+
+const appFB = initializeApp(firebaseConfig);
+const db = getFirestore(appFB);
+const ref = doc(db,"honeymoon","trip");
+
+/* 動態生成行程 */
+const daysDiv = document.getElementById("days");
+days.forEach((t,i)=>{
+  daysDiv.innerHTML += `
+  <div class="card">
+    <h3>📅 Day ${i+1}｜${t}</h3>
+    <input id="place${i+1}" placeholder="地點（例：Albert Park Circuit）">
+    <button onclick="nav(${i+1})">🧭 導航</button>
+    <textarea id="day${i+1}" oninput="save()"></textarea>
+  </div>`;
+});
+
+/* 儲存 */
+window.save = async ()=>{
+  let data={};
+  for(let i=1;i<=12;i++){
+    data["day"+i]=document.getElementById("day"+i).value;
+    data["place"+i]=document.getElementById("place"+i).value;
+  }
+  localStorage.setItem("backup",JSON.stringify(data));
+  await setDoc(ref,data);
+};
+
+/* 同步 */
+onSnapshot(ref,snap=>{
+  if(snap.exists()){
+    const d=snap.data();
+    for(let i=1;i<=12;i++){
+      document.getElementById("day"+i).value=d["day"+i]||"";
+      document.getElementById("place"+i).value=d["place"+i]||"";
+    }
+    localStorage.setItem("backup",JSON.stringify(d));
+  }
+});
+</script>
+
+<script>
+/* 🔐 密碼 */
+const PASSWORD="MMHONEY";
+
+/* 登入 */
+function login(){
+  if(pw.value===PASSWORD){
+    loginBox.style.display="none";
+    app.style.display="block";
+    const b=localStorage.getItem("backup");
+    if(b){
+      const d=JSON.parse(b);
+      for(let i=1;i<=12;i++){
+        document.getElementById("day"+i).value=d["day"+i]||"";
+        document.getElementById("place"+i).value=d["place"+i]||"";
+      }
+    }
+  }else alert("密碼錯誤");
+}
+
+/* 導航 */
+function nav(i){
+  const v=document.getElementById("place"+i).value;
+  if(!v){alert("請輸入地點");return;}
+  window.open(
+    "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(v),
+    "_blank"
+  );
+}
+</script>
 
 </body>
 </html>
